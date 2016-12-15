@@ -1,0 +1,3 @@
+---
+- name: restart netctl-auto
+  systemd: enabled=yes state=restarted name=netctl-auto@wlan0

@@ -1,0 +1,13 @@
+---
+- name: Install packages
+  action: pacman name={{item}} state=installed
+  with_items:
+       - netctl
+       - wpa_actiond
+
+- name: Install wlan0 profile
+  template: src=wlan0-megamouth.j2 dest=/etc/netctl/wlan0-megamouth
+
+- name: Enable netctl-auto
+  systemd: enabled=yes name=netctl-auto@wlan0
+  notify: restart netctl-auto

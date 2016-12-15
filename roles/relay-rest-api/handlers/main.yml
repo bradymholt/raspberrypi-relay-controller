@@ -1,0 +1,3 @@
+---
+- name: restart relay-rest-api
+  systemd: enabled=yes state=restarted name=relay-rest-api

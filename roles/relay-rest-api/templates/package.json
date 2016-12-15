@@ -1,0 +1,8 @@
+{
+    "name": "relay-rest-api",
+    "version": "1.0.0",
+    "dependencies": {
+        "hapi": "^16.0.1",
+        "rpio": "^0.9.12"
+    }
+}

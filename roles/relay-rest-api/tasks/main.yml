@@ -1,0 +1,28 @@
+---
+- name: Check for relay-rest-api installation     
+  stat: path={{install_dir}}
+  register: p
+
+- name: Create relay-rest-api install directory
+  file: path={{install_dir}} state=directory mode=0775
+  when: not p.stat.exists
+
+- name: Copy server files
+  template: src={{ item }} dest={{install_dir}}/{{ item | basename | regex_replace('\.j2','') }}
+  with_items:
+    - package.json
+    - server.js
+  notify: restart relay-rest-api
+
+- name: Install gcc and make (required to build rpio module)
+  action: pacman name={{item}} state=installed
+  with_items:
+       - make
+       - gcc
+
+- name: npm install
+  npm: path={{install_dir}} state=present
+
+- name: Install relay-rest-api systemd unit file
+  template: src=relay-rest-api.service.j2 dest=/etc/systemd/system/relay-rest-api.service
+  notify: restart relay-rest-api
