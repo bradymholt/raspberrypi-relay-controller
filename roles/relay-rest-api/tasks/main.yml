@@ -11,7 +11,7 @@
   template: src={{ item }} dest={{install_dir}}/{{ item | basename | regex_replace('\.j2','') }}
   with_items:
     - package.json
-    - server.js
+    - server.js.j2
   notify: restart relay-rest-api
 
 - name: Install gcc and make (required to build rpio module)
