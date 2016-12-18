@@ -38,6 +38,7 @@ server.start((err) => {
 });
 
 // Broadcast API metadata to UDP socket for discovery by other devices
+const dgram = require('dgram');
 const broadcastSocket = dgram.createSocket("udp4");
 const broadcastPort = 41234;
 const broadcastAddress = "255.255.255.255";
