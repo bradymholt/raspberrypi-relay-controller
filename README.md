@@ -29,4 +29,4 @@ This is the repository containing an Ansible playbook for provisioning  my Raspb
 ## Provisioning
 
 1. Ensure Ansible 2.2 is installed
-2. `provision.sh` (ansible-vault password located in LastPass > Secure Notes > Applications Secrets > "goblin ansible-vault")
+2. `provision.sh` (ansible-vault password located in LastPass > Secure Notes > Applications Secrets > "hammerhead ansible-vault")
