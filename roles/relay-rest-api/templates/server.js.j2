@@ -44,7 +44,7 @@ const broadcastAddress = "255.255.255.255";
 const broadcastMessage = JSON.stringify({
     source: "{{hostname}} relay API",
     availableRelays: [1,2],
-    endpoint: "relays/{relayNumber}"
+    endpoint: "relays/{relayNumber}",
     endpointMethod: "PUT",
     relayStateClosedObject: { relay: { state: "closed" } }
 });
