@@ -6,9 +6,11 @@ server.connection({ port: 3000 });
 
 const rpio = require('rpio');
 const defaultPinOnDuration = 500;
+
+// Raspberry Pi Model B (P1 Header) schematic: http://pi4j.com/images/p1header-large.png
 const relayToGpioPinMapping = {
-    '1': 12,
-    '2': 13
+    '1': 11,
+    '2': 12
 };
 
 // Test: curl -X PUT -D - -H "Content-Type: application/json" -d '{ "relay":{"state":"closed"}}' http://localhost:3000/relays/1
