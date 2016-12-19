@@ -20,7 +20,7 @@ server.route({
     handler: function (request, reply) {
         let relayNumber = request.params.number;
         let relay = request.payload.relay;
-        if (relay.state === "closed") {
+        if (relay.state === "triggered") {
             let relayPin = relayToGpioPinMapping[relayNumber];
             let duration = Number(relay.close_duration || defaultPinOnDuration);
             console.log(JSON.stringify(relay));
@@ -46,10 +46,10 @@ const broadcastPort = 41234;
 const broadcastAddress = "255.255.255.255";
 const broadcastMessage = JSON.stringify({
     source: "{{hostname}} relay API",
-    availableRelays: [1,2],
     endpoint: "relays/{relayNumber}",
     endpointMethod: "PUT",
-    relayStateClosedObject: { relay: { state: "closed" } }
+    availableRelays: [1,2],
+    availableStates: ["triggered"]
 });
 const broadcastIntervalMilliseconds = 60000;
 broadcastSocket.bind(() => {

@@ -26,4 +26,4 @@
     - wifi
     - spi
     - node
-    - relay-rest-api
+    - { role: relay-rest-api, tags: ['relay-rest-api'] }
