@@ -12,6 +12,7 @@
   with_items:
     - package.json
     - server.js.j2
+    - index.html
   notify: restart relay-rest-api
 
 - name: Install gcc and make (required to build rpio module)

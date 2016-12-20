@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "dependencies": {
         "hapi": "^16.0.1",
+        "inert": "^4.0.3",
         "rpio": "^0.9.12"
     }
 }

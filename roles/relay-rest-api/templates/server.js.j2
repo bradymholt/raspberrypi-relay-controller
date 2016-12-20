@@ -1,7 +1,15 @@
 'use strict';
 
 const Hapi = require('hapi');
-const server = new Hapi.Server();
+const server = new Hapi.Server({
+    connections: {
+        routes: {
+            files: {
+                relativeTo: __dirname
+            }
+        }
+    }
+});
 server.connection({ port: 3000 });
 
 const rpio = require('rpio');
@@ -13,30 +21,47 @@ const relayToGpioPinMapping = {
     '2': 12
 };
 
-// Test: curl -X PUT -D - -H "Content-Type: application/json" -d '{ "relay":{"state":"closed"}}' http://localhost:3000/relays/1
-server.route({
-    method: 'PUT',
-    path: '/relays/{number}',
-    handler: function (request, reply) {
-        let relayNumber = request.params.number;
-        let relay = request.payload.relay;
-        if (relay.state === "triggered") {
-            let relayPin = relayToGpioPinMapping[relayNumber];
-            let duration = Number(relay.close_duration || defaultPinOnDuration);
-            console.log(JSON.stringify(relay));
-            toggleGpioPinOn(relayPin, duration);
-        }
+server.register(require('inert'), (err) => {
 
-        reply().code(204);
-    }
-});
-
-// Start hapi.js HTTP server
-server.start((err) => {
     if (err) {
         throw err;
     }
-    console.log(`Server running at: ${server.info.uri}`);
+
+    // index.html static file
+    server.route({
+        method: 'GET',
+        path: '/',
+        handler: {
+            file: 'index.html'
+        }
+    });
+
+    // The REST endpoint for triggering the relay
+    // Test: curl -X PUT -D - -H "Content-Type: application/json" -d '{ "relay":{"state":"closed"}}' http://localhost:3000/relays/1
+    server.route({
+        method: 'PUT',
+        path: '/relays/{number}',
+        handler: function (request, reply) {
+            let relayNumber = request.params.number;
+            let relay = request.payload.relay;
+            if (relay.state === "triggered") {
+                let relayPin = relayToGpioPinMapping[relayNumber];
+                let duration = Number(relay.close_duration || defaultPinOnDuration);
+                console.log(JSON.stringify(relay));
+                toggleGpioPinOn(relayPin, duration);
+            }
+
+            reply().code(204);
+        }
+    });
+
+    // Start hapi.js HTTP server
+    server.start((err) => {
+        if (err) {
+            throw err;
+        }
+        console.log(`Server running at: ${server.info.uri}`);
+    });
 });
 
 // Broadcast API metadata to UDP socket for discovery by other devices
