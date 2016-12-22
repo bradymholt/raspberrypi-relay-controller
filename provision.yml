@@ -1,18 +1,16 @@
 ---
+- name: Add pi host
+  hosts: localhost
+  tasks:
+    - add_host:
+        name: "{{ip_address}}"
+        groups: pi
+
 - name: provision
   remote_user: root
-  hosts: all
+  hosts: pi
   # Do not gather facts here because initially python2, an Ansible dependency is not installed
   gather_facts: false
-  vars:
-    - hostname: "hammerhead"
-    - timezone: "America/Chicago"
-    - main_user: bholt
-    - gh_pubkey_user: bradyholt
-    - wifi_ssid: megamouth
-  # The following variables values are specified in secrets.yml.  When running ansible-playbook, "-e @secrets.yml" should be specified.
-  # - main_user_password:
-  # - wifi_ssid_key:
   pre_tasks:
     - name: 'Install python2'
       raw: pacman -Sy --noconfirm --needed python2 && ln -sf /usr/bin/python2 /usr/bin/python

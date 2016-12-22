@@ -1,0 +1,9 @@
+---
+hostname: "hammerhead"
+timezone: "America/Chicago"
+main_user: bholt
+main_user_password: superSecretHere
+gh_pubkey_user: bradyholt
+wifi_ssid: MyAwesomeWifiNetwork
+# wifi_ssid_key is a 256-bit PSK and can be generated here: https://www.wireshark.org/tools/wpa-psk.html
+wifi_ssid_key: \"ddddd1113333eeeefffbbaa33333ffffss000000000
