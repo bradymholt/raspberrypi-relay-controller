@@ -35,4 +35,4 @@ Do the following from the provisioning host (i.e. OS X or Windows):
 4. Run `./provision.sh`
 5. Navigate to http://[ip_address]:3000 and you should see the web interface like below
 
-![Relay Web Interface](https://cloud.githubusercontent.com/assets/759811/21467989/8c2b842e-c9c5-11e6-863e-e1751d73a091.png)
+<img width="360" alt="relay-controller-web-interface" src="https://cloud.githubusercontent.com/assets/759811/21467989/8c2b842e-c9c5-11e6-863e-e1751d73a091.png">
