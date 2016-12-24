@@ -4,10 +4,12 @@ An Ansible playbook to provision a Raspberry Pi as a 2-channel relay control ser
 
 # Instructions
 
+The following instructions assume you are using a Raspberry Pi 3 Model B.
+
 ## Setup Arch Linux ARM on Raspberry Pi
 
 1. Follow the [Mount SD card in VirtualBox from Mac OS X Host](http://www.geekytidbits.com/mount-sd-card-virtualbox-from-mac-osx/) guide to get access to SD Card from VirtualBox running on OS X host.
-2. Prepare SD Card using instructions specific to your Raspberry Pi device generation: [Raspberry 1](https://archlinuxarm.org/platforms/armv6/raspberry-pi), [Raspberry 2](https://archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2), [Raspberry 3](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3).
+2. Prepare the SD Card by following [these instructions on the Arch Linux ARM website](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3).
 3. Before running `umount boot root` from the above instructions, run `sync`.
 4. After running  `umount boot root` from the above instructions, shutdown VirtualBox and then Eject the SD Card from OS X.
 5. Insert SD Card into the Pi and boot
@@ -33,4 +35,4 @@ Do the following from the provisioning host (i.e. OS X or Windows):
 4. Run `./provision.sh`
 5. Navigate to http://[ip_address]:3000 and you should see the web interface like below
 
-![image](https://cloud.githubusercontent.com/assets/759811/21414129/6ffc9bda-c7c2-11e6-9732-1c49930e84ef.png)
+![Relay Web Interface](https://cloud.githubusercontent.com/assets/759811/21414129/6ffc9bda-c7c2-11e6-9732-1c49930e84ef.png)
