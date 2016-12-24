@@ -1,2 +1,4 @@
 *.retry
 config.yml
+yarn.lock
+node_modules/
