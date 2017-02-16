@@ -95,3 +95,12 @@ function toggleGpioPinOn(pin, durationMilliseconds) {
     // Turn pin OFF.
     rpio.write(pin, rpio.LOW);
 }
+
+// On startup, turn all the pins off.
+for(let relay of Object.keys(relayToGpioPinMapping)) {
+    let pin = relayToGpioPinMapping[relay];
+    // Set the initial state to low.
+    rpio.open(pin, rpio.OUTPUT, rpio.LOW);
+    // Turn pin OFF.
+    rpio.write(pin, rpio.LOW);
+}
