@@ -21,6 +21,8 @@ const relayToGpioPinMapping = {
     '2': 12
 };
 
+const relayStatus = {};
+
 server.register(require('inert'), (err) => {
 
     if (err) {
@@ -32,6 +34,28 @@ server.register(require('inert'), (err) => {
     server.route({ method: 'GET', path: '/fetch.js', handler: { file: 'node_modules/whatwg-fetch/fetch.js' } } );
 
     // REST endpoint routes
+
+    // Get Status
+    server.route({ method: 'GET', path: '/relay/{number}/status',
+        handler: function (request, reply) {
+            let relayNumber = request.params.number;
+            reply({
+                status: relayStatus[relayNumber]
+            });
+        }
+    });
+
+    // Set Status
+    server.route({ method: 'PUT', path: '/relay/{number}/status',
+        handler: function (request, reply) {
+            let relayNumber = request.params.number;
+            let status = request.payload.status;
+            relayStatus[relayNumber] = status;
+            reply().code(200);
+        }
+    });
+
+    // Command
     // Test: curl -X PUT -D - -H "Content-Type: application/json" http://localhost:3000/relay/1/command/on
     server.route({ method: 'POST', path: '/relay/{number}/command/{command}',
         handler: function (request, reply) {
@@ -41,6 +65,7 @@ server.register(require('inert'), (err) => {
                 console.log(`Running command: Relay (${relayNumber}) [${command}]`);
                 let relayPin = relayToGpioPinMapping[relayNumber];
                 toggleGpioPinOn(relayPin, defaultPinOnDuration);
+                relayStatus[relay] = !relayStatus[relay];
                 reply().code(200);
             } else {
                 reply().code(501);
@@ -96,4 +121,5 @@ for(let relay of Object.keys(relayToGpioPinMapping)) {
     rpio.open(pin, rpio.OUTPUT, rpio.LOW);
     // Turn pin OFF.
     rpio.write(pin, rpio.LOW);
+    relayStatus[relay] = false;
 }
