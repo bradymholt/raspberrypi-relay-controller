@@ -37,7 +37,7 @@ server.register(require('inert'), (err) => {
         handler: function (request, reply) {
             let relayNumber = request.params.number;
             let command = request.params.command;
-            if (command == "on") {
+            if (['toggle', 'on', 'off'].indexOf(command) >= 0) {
                 console.log(`Running command: Relay (${relayNumber}) [${command}]`);
                 let relayPin = relayToGpioPinMapping[relayNumber];
                 toggleGpioPinOn(relayPin, defaultPinOnDuration);

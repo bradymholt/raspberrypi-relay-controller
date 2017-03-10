@@ -51,7 +51,7 @@
         };
 
         var relayNumber = source.getAttribute("data-relay");
-        fetch(`/relay/${relayNumber}/command/on`, opts).then(function (response) {
+        fetch(`/relay/${relayNumber}/command/toggle`, opts).then(function (response) {
             let output = `Relay ${relayNumber} - `;
             if (response.status == 200) {
                 output += "TRIGGERED";
