@@ -29,6 +29,7 @@ server.register(require('inert'), (err) => {
 
     // Static routes
     server.route({ method: 'GET', path: '/', handler: { file: 'index.html' } });
+    server.route({ method: 'GET', path: '/fetch.js', handler: { file: 'node_modules/whatwg-fetch/fetch.js' } } );
 
     // REST endpoint routes
     // Test: curl -X PUT -D - -H "Content-Type: application/json" -d '{ "relay":{"state":"closed"}}' http://localhost:3000/relays/1
