@@ -1,5 +1,5 @@
 ---
-- name: Check for relay-rest-api installation     
+- name: Check for relay-rest-api installation
   stat: path={{install_dir}}
   register: p
 
@@ -12,7 +12,7 @@
   with_items:
     - package.json
     - server.js.j2
-    - index.html
+    - index.html.j2
   notify: restart relay-rest-api
 
 - name: Install gcc and make (required to build rpio module)

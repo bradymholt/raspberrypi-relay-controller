@@ -1,2 +1,7 @@
 ---
 install_dir: /opt/relay-rest-api
+web_port: 3000
+page_label_title: "Relays"
+button_label_relay_1: "Relay 1"
+button_label_relay_2: "Relay 2"
+

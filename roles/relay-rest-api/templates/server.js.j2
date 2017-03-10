@@ -10,7 +10,7 @@ const server = new Hapi.Server({
         }
     }
 });
-server.connection({ port: 3000 });
+server.connection({ port: {{web_port}} });
 
 const rpio = require('rpio');
 const defaultPinOnDuration = 500;
@@ -27,31 +27,23 @@ server.register(require('inert'), (err) => {
         throw err;
     }
 
-    // index.html static file
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: {
-            file: 'index.html'
-        }
-    });
+    // Static routes
+    server.route({ method: 'GET', path: '/', handler: { file: 'index.html' } });
 
-    // The REST endpoint for triggering the relay
+    // REST endpoint routes
     // Test: curl -X PUT -D - -H "Content-Type: application/json" -d '{ "relay":{"state":"closed"}}' http://localhost:3000/relays/1
-    server.route({
-        method: 'PUT',
-        path: '/relays/{number}',
+    server.route({ method: 'POST', path: '/relay/{number}/command/{command}',
         handler: function (request, reply) {
             let relayNumber = request.params.number;
-            let relay = request.payload.relay;
-            if (relay.state === "triggered") {
+            let command = request.params.command;
+            if (command == "on") {
+                console.log(`Running command: Relay (${relayNumber}) [${command}]`);
                 let relayPin = relayToGpioPinMapping[relayNumber];
-                let duration = Number(relay.close_duration || defaultPinOnDuration);
-                console.log(JSON.stringify(relay));
-                toggleGpioPinOn(relayPin, duration);
+                toggleGpioPinOn(relayPin, defaultPinOnDuration);
+                reply().code(204);
+            } else {
+                reply().code(501);
             }
-
-            reply().code(204);
         }
     });
 

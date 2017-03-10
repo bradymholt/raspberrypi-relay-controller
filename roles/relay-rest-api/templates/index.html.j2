@@ -37,30 +37,27 @@
     </style>
 </head>
 <body>
-    <h1>Relays</h1>
-    <button id="relay1" data-relay="1" class="button" onclick="triggerRelay(this)" type="button">Relay 1</button>
-    <button id="relay2" data-relay="2" class="button" onclick="triggerRelay(this)" type="button">Relay 2</button>
+    <h1>{{page_label_title}}</h1>
+    <button id="relay1" data-relay="1" class="button" onclick="triggerRelay(this)" type="button">{{button_label_relay_1}}</button>
+    <button id="relay2" data-relay="2" class="button" onclick="triggerRelay(this)" type="button">{{button_label_relay_2}}</button>
     <div id="log"></div>
-    
+
 <script>
     function triggerRelay(source) {
         var opts = {
-            method: 'PUT',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ relay: { state: 'triggered' } }),
+            method: 'POST',
+            headers: { "Content-Type": "application/json" }
         };
 
         var relayNumber = source.getAttribute("data-relay");
-        fetch('/relays/' + relayNumber, opts).then(function (response) {
+        fetch(`/relay/${relayNumber}/command/on`, opts).then(function (response) {
             let output = `Relay ${relayNumber} - `;
             if (response.status == 204) {
                 output += "TRIGGERED";
             } else {
                 output += "FAILED";
             }
-            
+
             document.getElementById("log").innerText = output + "\n" + document.getElementById("log").innerText;
         });
     }
