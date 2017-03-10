@@ -32,7 +32,7 @@ server.register(require('inert'), (err) => {
     server.route({ method: 'GET', path: '/fetch.js', handler: { file: 'node_modules/whatwg-fetch/fetch.js' } } );
 
     // REST endpoint routes
-    // Test: curl -X PUT -D - -H "Content-Type: application/json" -d '{ "relay":{"state":"closed"}}' http://localhost:3000/relays/1
+    // Test: curl -X PUT -D - -H "Content-Type: application/json" http://localhost:3000/relay/1/command/on
     server.route({ method: 'POST', path: '/relay/{number}/command/{command}',
         handler: function (request, reply) {
             let relayNumber = request.params.number;
