@@ -53,7 +53,7 @@
         var relayNumber = source.getAttribute("data-relay");
         fetch(`/relay/${relayNumber}/command/on`, opts).then(function (response) {
             let output = `Relay ${relayNumber} - `;
-            if (response.status == 204) {
+            if (response.status == 200) {
                 output += "TRIGGERED";
             } else {
                 output += "FAILED";
