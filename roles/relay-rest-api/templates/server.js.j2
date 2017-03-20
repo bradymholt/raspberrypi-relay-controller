@@ -67,7 +67,7 @@ server.register(require('inert'), (err) => {
                 toggleGpioPinOn(relayPin, defaultPinOnDuration);
                 relayStatus[relayNumber] = !relayStatus[relayNumber];
                 reply({
-                    status: !relayStatus[relayNumber]
+                    status: relayStatus[relayNumber]
                 }).code(200);
             } else {
                 reply().code(501);
