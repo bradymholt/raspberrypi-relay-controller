@@ -65,8 +65,10 @@ server.register(require('inert'), (err) => {
                 console.log(`Running command: Relay (${relayNumber}) [${command}]`);
                 let relayPin = relayToGpioPinMapping[relayNumber];
                 toggleGpioPinOn(relayPin, defaultPinOnDuration);
-                relayStatus[relay] = !relayStatus[relay];
-                reply().code(200);
+                relayStatus[relayNumber] = !relayStatus[relayNumber];
+                reply({
+                    status: relayStatus[relayNumber]
+                }).code(200);
             } else {
                 reply().code(501);
             }
