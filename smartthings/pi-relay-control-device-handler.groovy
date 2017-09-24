@@ -58,11 +58,13 @@ def refresh() {
 
 def on() {
 	log.debug "Executing 'on'"
+	setUI(true);
 	setDeviceState('on');
 }
 
 def off() {
 	log.debug "Executing 'off'"
+	setUI(false);
 	setDeviceState('off');
 }
 
