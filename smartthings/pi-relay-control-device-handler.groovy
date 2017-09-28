@@ -58,14 +58,28 @@ def refresh() {
 
 def on() {
 	log.debug "Executing 'on'"
+
+	if (getDeviceState() == "on") {
+	  log.debug "Device is already 'on' but still still be switched 'on'."
+	}
+
 	setUI(true);
 	setDeviceState('on');
 }
 
 def off() {
 	log.debug "Executing 'off'"
-	setUI(false);
-	setDeviceState('off');
+
+	if (getDeviceState() != "off") {
+	  setUI(false);
+	  setDeviceState('off');
+	} else {
+	  log.debug "Device is already 'off'."
+	}
+}
+
+def String getDeviceState(){
+	return device.currentState("switch").getValue();
 }
 
 def setDeviceState(state) {
